@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tweet Recommendations</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+  <style>
+    @import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300ita‌​lic,400italic,500,500italic,700,700italic,900italic,900);
+
+    html,
+    body,
+    html * {
+      font-family: 'Roboto', sans-serif;
+    }
+
+
+    .icon-cards {
+      position: relative;
+      width: 60vw;
+      height: 40vw;
+      max-width: 450px;
+      max-height: 300px;
+      margin: 0;
+      -webkit-perspective: 1000px;
+      perspective: 1000px;
+      -webkit-transform-origin: center;
+      transform-origin: center;
+    }
+
+    .icon-cards__content {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-transform-origin: center;
+      transform-origin: center;
+      -webkit-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+      -webkit-transform: translateZ(-30vw) rotateY(0);
+      transform: translateZ(-30vw) rotateY(0);
+      -webkit-animation: carousel 10s infinite cubic-bezier(0.77, 0, 0.175, 1) forwards;
+      animation: carousel 10s infinite cubic-bezier(0.77, 0, 0.175, 1) forwards;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      transition: .5s ease;
+      background: linear-gradient(147deg, #6e0777 0%, #380c70 74%);
+      border-radius: 6px;
+      border: 2px solid #6e0777;
+
+    }
+
+    .icon-cards__item:hover .overlay {
+      opacity: 1;
+      transform: scale(0.9, 0.9);
+      box-shadow: 5px 5px 30px 15px rgba(0, 0, 0, 0.25),
+        -5px -5px 30px 15px rgba(0, 0, 0, 0.22);
+      cursor: pointer;
+      background: linear-gradient(147deg, #6e0777 0%, #380c70 74%);
+    }
+
+    .text {
+      color: white;
+      font-size: 25px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+
+
+    .icon-cards__content.step-animation {
+      -webkit-animation: carousel 8s infinite steps(1) forwards;
+      animation: carousel 8s infinite steps(1) forwards;
+    }
+
+    .icon-cards__item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 60vw;
+      height: 40vw;
+      max-width: 380px;
+      max-height: 250px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      border-radius: 6px;
+      -webkit-transform-origin: center;
+      transform-origin: center;
+      background-image: linear-gradient(147deg, #ff7c34 0%, #c31269 74%);
+      background: linear-gradient(147deg, #ff7c34 0%, #c31269 74%);
+    }
+
+    .icon-cards__item:nth-child(1) {
+      background: linear-gradient(147deg, #ff7c34 0%, #c31269 74%);
+      ;
+      -webkit-transform: rotateY(0) translateZ(35vw);
+      transform: rotateY(0) translateZ(35vw);
+
+    }
+
+    .icon-cards__item:nth-child(2) {
+      background: linear-gradient(147deg, #ff7c34 0%, #c31269 74%);
+      ;
+      ;
+      -webkit-transform: rotateY(60deg) translateZ(35vw);
+      transform: rotateY(60deg) translateZ(35vw);
+    }
+
+    .icon-cards__item:nth-child(3) {
+      background: linear-gradient(147deg, #ff7c34 0%, #c31269 74%);
+      ;
+      -webkit-transform: rotateY(120deg) translateZ(35vw);
+      transform: rotateY(120deg) translateZ(35vw);
+    }
+
+    .icon-cards__item:nth-child(4) {
+      background: linear-gradient(147deg, #ff7c34 0%, #c31269 74%);
+      ;
+      -webkit-transform: rotateY(180deg) translateZ(35vw);
+      transform: rotateY(180deg) translateZ(35vw);
+    }
+
+    .icon-cards__item:nth-child(5) {
+      background: linear-gradient(147deg, #ff7c34 0%, #c31269 74%);
+      ;
+      -webkit-transform: rotateY(240deg) translateZ(35vw);
+      transform: rotateY(240deg) translateZ(35vw);
+    }
+
+    .icon-cards__item:nth-child(6) {
+      background: linear-gradient(147deg, #ff7c34 0%, #c31269 74%);
+      ;
+      -webkit-transform: rotateY(300deg) translateZ(35vw);
+      transform: rotateY(300deg) translateZ(35vw);
+    }
+
+    .icon-cards__item:nth-child(1) {
+      background: linear-gradient(147deg, #ff7c34 0%, #c31269 74%);
+      ;
+      -webkit-transform: rotateY(0) translateZ(35vw);
+      transform: rotateY(0) translateZ(35vw);
+    }
+
+
+
+    @-webkit-keyframes carousel {
+
+      0%,
+      10% {
+        -webkit-transform: translateZ(-35vw) rotateY(0);
+        transform: translateZ(-35vw) rotateY(0);
+      }
+
+      15%,
+      25% {
+        -webkit-transform: translateZ(-35vw) rotateY(-60deg);
+        transform: translateZ(-35vw) rotateY(-60deg);
+      }
+
+      30%,
+      40% {
+        -webkit-transform: translateZ(-35vw) rotateY(-120deg);
+        transform: translateZ(-35vw) rotateY(-120deg);
+      }
+
+      45%,
+      55% {
+        -webkit-transform: translateZ(-35vw) rotateY(-180deg);
+        transform: translateZ(-35vw) rotateY(-180deg);
+      }
+
+      60%,
+      70% {
+        -webkit-transform: translateZ(-35vw) rotateY(-240deg);
+        transform: translateZ(-35vw) rotateY(-240deg);
+      }
+
+      75%,
+      85% {
+        -webkit-transform: translateZ(-35vw) rotateY(-300deg);
+        transform: translateZ(-35vw) rotateY(-300deg);
+      }
+
+      90%,
+      100% {
+        -webkit-transform: translateZ(-35vw) rotateY(-360deg);
+        transform: translateZ(-35vw) rotateY(-360deg);
+      }
+
+    }
+
+    @keyframes carousel {
+
+      0%,
+      10% {
+        -webkit-transform: translateZ(-35vw) rotateY(0);
+        transform: translateZ(-35vw) rotateY(0);
+      }
+
+      15%,
+      25% {
+        -webkit-transform: translateZ(-35vw) rotateY(-60deg);
+        transform: translateZ(-35vw) rotateY(-60deg);
+      }
+
+      30%,
+      40% {
+        -webkit-transform: translateZ(-35vw) rotateY(-120deg);
+        transform: translateZ(-35vw) rotateY(-120deg);
+      }
+
+      45%,
+      55% {
+        -webkit-transform: translateZ(-35vw) rotateY(-180deg);
+        transform: translateZ(-35vw) rotateY(-180deg);
+      }
+
+      60%,
+      70% {
+        -webkit-transform: translateZ(-35vw) rotateY(-240deg);
+        transform: translateZ(-35vw) rotateY(-240deg);
+      }
+
+      75%,
+      85% {
+        -webkit-transform: translateZ(-35vw) rotateY(-300deg);
+        transform: translateZ(-35vw) rotateY(-300deg);
+      }
+
+      90%,
+      100% {
+        -webkit-transform: translateZ(-35vw) rotateY(-360deg);
+        transform: translateZ(-35vw) rotateY(-360deg);
+      }
+
+    }
+
+    html,
+    body {
+      height: 100%;
+      background-image: linear-gradient(-225deg, #231557 0%, #44107A 29%, #FF1361 67%, #fa9b48 100%);
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    #footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 2.5rem;
+      /* Footer height */
+    }
+
+
+
+    @-webkit-keyframes jelly {
+      from {
+        -webkit-transform: scale(1, 1);
+        transform: scale(1, 1);
+      }
+
+      20% {
+        -webkit-transform: scale(1.25, 0.75);
+        transform: scale(1.25, 0.75);
+      }
+
+      35% {
+        -webkit-transform: scale(0.75, 1.25);
+        transform: scale(0.75, 1.25);
+      }
+
+      50% {
+        -webkit-transform: scale(1.15, 0.85);
+        transform: scale(1.15, 0.85);
+      }
+
+      65% {
+        -webkit-transform: scale(0.95, 1.05);
+        transform: scale(0.95, 1.05);
+      }
+
+      80% {
+        -webkit-transform: scale(1.05, 0.95);
+        transform: scale(1.05, 0.95);
+      }
+
+      to {
+        -webkit-transform: scale(1, 1);
+        transform: scale(1, 1);
+      }
+    }
+
+    @keyframes jelly {
+      from {
+        -webkit-transform: scale(1, 1);
+        transform: scale(1, 1);
+      }
+
+      20% {
+        -webkit-transform: scale(1.25, 0.75);
+        transform: scale(1.25, 0.75);
+      }
+
+      35% {
+        -webkit-transform: scale(0.75, 1.25);
+        transform: scale(0.75, 1.25);
+      }
+
+      50% {
+        -webkit-transform: scale(1.15, 0.85);
+        transform: scale(1.15, 0.85);
+      }
+
+      65% {
+        -webkit-transform: scale(0.95, 1.05);
+        transform: scale(0.95, 1.05);
+      }
+
+      80% {
+        -webkit-transform: scale(1.05, 0.95);
+        transform: scale(1.05, 0.95);
+      }
+
+      to {
+        -webkit-transform: scale(1, 1);
+        transform: scale(1, 1);
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+  <!-- partial:index.partial.html -->
+  <figure class="icon-cards mt-3">
+    <div class="icon-cards__content">
+
+
+      <div class="icon-cards__item d-flex align-items-center justify-content-center" onclick="comedy()">
+        <span class="h1">😂</span>
+
+        <div class="overlay">
+          <div class="text">Comedy</div>
+        </div>
+
+      </div>
+
+      <div class="icon-cards__item d-flex align-items-center justify-content-center" onclick="horror()"><span
+          class="h1">🎃</span>
+        <div class="overlay">
+          <div class="text">Horror</div>
+        </div>
+      </div>
+
+      <div class="icon-cards__item d-flex align-items-center justify-content-center" onclick="action()"><span
+          class="h1">⚔</span>
+        <div class="overlay">
+          <div class="text">Action</div>
+        </div>
+      </div>
+      <div class="icon-cards__item d-flex align-items-center justify-content-center" onclick="romance()"><span
+          class="h1">❤</span>
+        <div class="overlay">
+          <div class="text">Romance</div>
+        </div>
+      </div>
+      <div class="icon-cards__item d-flex align-items-center justify-content-center" onclick="thriller()"><span
+          class="h1">🤯</span>
+        <div class="overlay">
+          <div class="text">Thriller</div>
+        </div>
+      </div>
+      <div class="icon-cards__item d-flex align-items-center justify-content-center" onclick="drama()"><span
+          class="h1">😥</span>
+        <div class="overlay">
+          <div class="text">Drama</div>
+        </div>
+      </div>
+    </div>
+  </figure>
+  <footer id="footer">Made with <span style=font-size:22px;"color: #e25555;">&hearts;</span> by Chandra Sekhar Mullu
+  </footer>
+  <!-- partial -->
+  <script>
+    function comedy() {
+      location.href = "http://127.0.0.1:5000/comedy";
+    }
+
+    function horror() {
+      location.href = "http://127.0.0.1:5000/horror";
+    }
+
+    function action() {
+      location.href = "http://127.0.0.1:5000/action";
+    }
+
+    function romance() {
+      location.href = "http://127.0.0.1:5000/romance";
+    }
+
+    function thriller() {
+      location.href = "http://127.0.0.1:5000/thriller";
+    }
+
+    function drama() {
+      location.href = "http://127.0.0.1:5000/drama";
+    }
+  </script>
+
+
+</body>
+
+
+</html>
