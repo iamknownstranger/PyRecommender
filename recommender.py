@@ -3,14 +3,16 @@ import pandas as pd
 import timeago
 import datetime
 
-api_key = "KlZ7E7VDg0rEsZiNMCU22u07V"  # consumer key
+api_key = "XXXXXXXXXXXXXXXXXXXXXX"  # consumer key
 
-api_secret_Key = "VVf5XJKCW9gWQRsu87Lkl6VjC39Rep8G4QSI0I5KcYI19Y9wn5"  # consumer secret
+api_secret_Key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"  # consumer secret
 
-access_token = "1143902557439320064-sfnE7zUdIXnTV6QUL2MH4UH6jVMoNy"
+access_token = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
-access_token_secret = "rp60MfnpM8yKSUhcnsfI8KQ1biAqIKUOt82mzOWhoXLPj"
+access_token_secret = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
+
+# Tweepy Handler
 auth = tweepy.OAuthHandler(api_key, api_secret_Key)
 auth.set_access_token(access_token, access_token_secret)
 
