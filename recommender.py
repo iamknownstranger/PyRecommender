@@ -3,6 +3,7 @@ import pandas as pd
 import timeago
 import datetime
 
+# api keys
 api_key = "XXXXXXXXXXXXXXXXXXXXXX"  # consumer key
 
 api_secret_Key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"  # consumer secret
@@ -27,8 +28,10 @@ class Recommender:
 
     def get_tweets(self, search_query):
         
-        '''Function returns the tweets that are includ the given search query as a list'''
+        ''' Function returns the tweets that are includ the given search query as a list '''
         self.tweets = []
+
+        # query api for tweets
         for tweet in tweepy.Cursor(api.search, q=search_query, lang='en', count=1000, tweet_mode='extended').items(1000):
             if(not tweet.retweeted) and ('RT @' not in tweet.full_text):
                 
@@ -37,6 +40,7 @@ class Recommender:
                     [tweet.user.name, '@'+tweet.user.screen_name, timeago.format(tweet.created_at, self.time), tweet.full_text])
 
         return self.tweets
-    
+
+# for testing purposes 
 # RecommenderObject = Recommender()
 # tweets_about_horror_movies = RecommenderObject.get_tweets("best horror netflix")
